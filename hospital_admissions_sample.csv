@@ -1,0 +1,26 @@
+country,indicator,date,year_week,value,source,url
+Luxembourg,Daily hospital occupancy,2020-08-02,2020-W31,61.0,Country_Website,https://covid19.public.lu/fr/graph.html
+Bulgaria,Daily ICU occupancy,2020-06-16,2020-W25,14.0,External_Github,https://github.com/COVID-19-Bulgaria/covid-database
+Portugal,Daily ICU occupancy,2020-08-03,2020-W32,42.0,Country_Website,https://covid19.min-saude.pt/ponto-de-situacao-atual-em-portugal/
+Denmark,Daily hospital occupancy,2020-06-12,2020-W24,12.0,Country_Website,
+Luxembourg,Daily ICU occupancy,2020-06-04,2020-W23,1.0,Country_Website,https://covid19.public.lu/fr/graph.html
+Hungary,Daily hospital occupancy,2020-08-25,2020-W35,57.0,JRC,https://github.com/ec-jrc/COVID-19
+Finland,Daily ICU occupancy,2020-09-23,2020-W39,4.0,External_Github,https://github.com/HS-Datadesk/koronavirus-avoindata#direct-interface-to-hs-data
+Malta,Daily ICU occupancy,2020-06-30,2020-W27,1.0,Surveillance,https://infogram.com/1p1xpwwgj1w3v2imxjzwjvv152b63z02dvv?live
+Italy,Daily ICU occupancy,2020-05-15,2020-W20,808.0,Country_Github,https://github.com/pcm-dpc/COVID-19
+Portugal,Daily ICU occupancy,2020-10-16,2020-W42,144.0,Country_Website,https://covid19.min-saude.pt/ponto-de-situacao-atual-em-portugal/
+France,Daily ICU occupancy,2020-10-04,2020-W40,1335.0,Country_Website,https://www.data.gouv.fr/fr/datasets/donnees-hospitalieres-relatives-a-lepidemie-de-covid-19/
+Finland,Daily ICU occupancy,2020-06-02,2020-W23,9.0,External_Github,https://github.com/HS-Datadesk/koronavirus-avoindata#direct-interface-to-hs-data
+Estonia,Daily ICU occupancy,2020-04-15,2020-W16,10.0,Surveillance,https://koroonakaart.ee/en
+Romania,Daily ICU occupancy,2020-04-03,2020-W14,83.0,Country_Website,http://www.ms.ro/2020/04/03/buletin-informativ-03-04-2020/
+Sweden,Weekly new ICU admissions per 100k,,2020-W11,0.156399908701553,,https://www.folkhalsomyndigheten.se/smittskydd-beredskap/utbrott/aktuella-utbrott/covid-19/bekraftade-fall-i-sverige
+Latvia,Daily hospital occupancy,2020-08-28,2020-W35,4.0,Country_Website,https://infogram.com/covid-19-izplatiba-latvija-1hzj4ozwvnzo2pw
+Czechia,Daily hospital occupancy,2020-09-01,2020-W36,172.0,Country_Website,https://onemocneni-aktualne.mzcr.cz/covid-19
+Bulgaria,Daily hospital occupancy,2020-05-07,2020-W19,353.0,External_Github,https://github.com/COVID-19-Bulgaria/covid-database
+Poland,Daily hospital occupancy,2020-10-10,2020-W41,4725.0,Country_Website,https://t.co/ZgKSKyiDHF
+Romania,Daily ICU occupancy,2020-10-25,2020-W43,828.0,Country_Website,http://www.ms.ro/2020/10/25/buletin-informativ-25-10-2020/
+Denmark,Daily ICU occupancy,2020-07-22,2020-W30,4.0,Country_Website,https://www.sst.dk/da/corona/tal-og-overvaagning
+Luxembourg,Daily hospital occupancy,2020-08-19,2020-W34,34.0,Country_Website,https://covid19.public.lu/fr/graph.html
+Bulgaria,Daily hospital occupancy,2020-09-27,2020-W39,791.0,External_Github,https://github.com/COVID-19-Bulgaria/covid-database
+Norway,Daily hospital occupancy,2020-06-15,2020-W25,18.0,Country_API,https://utvikler.helsedirektoratet.no/
+Slovenia,Daily hospital occupancy,2020-09-22,2020-W39,71.0,Country_Github,https://github.com/sledilnik/data

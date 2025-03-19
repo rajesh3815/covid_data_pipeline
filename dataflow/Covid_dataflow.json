@@ -1,0 +1,77 @@
+{
+	"name": "Covid_dataflow",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "raw_layer_data",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "gold_layer_data",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "select1"
+				},
+				{
+					"name": "filterEuropeOnly"
+				},
+				{
+					"name": "DeriveCasescountDeathcases"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          country as string,",
+				"          country_code as string,",
+				"          continent as string,",
+				"          population as long,",
+				"          indicator as string,",
+				"          daily_count as integer,",
+				"          date as date,",
+				"          rate_14_day as double,",
+				"          source as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     inferDriftedColumnTypes: true,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"filterEuropeOnly select(mapColumn(",
+				"          country,",
+				"          { country_code_3_digit} = country_code,",
+				"          continent,",
+				"          population,",
+				"          indicator,",
+				"          daily_count,",
+				"          { reported_date} = date,",
+				"          source",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"source1 filter(continent=='Europe') ~> filterEuropeOnly",
+				"select1 derive(death_counts = iif(equals(indicator,'deaths'),daily_count,0),",
+				"          cases_count = iif(equals(indicator,'confirmed cases'),daily_count,0),",
+				"          country_code_2_digit = substring({ country_code_3_digit},0,2)) ~> DeriveCasescountDeathcases",
+				"DeriveCasescountDeathcases sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}

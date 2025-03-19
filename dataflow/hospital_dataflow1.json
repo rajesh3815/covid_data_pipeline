@@ -1,0 +1,160 @@
+{
+	"name": "hospital_dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "raw_layer_Hospital_data",
+						"type": "DatasetReference"
+					},
+					"name": "HospitalCaseData"
+				},
+				{
+					"dataset": {
+						"referenceName": "raw_layer_data_death",
+						"type": "DatasetReference"
+					},
+					"name": "DeathCaseData"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "gold_layer_data",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				},
+				{
+					"dataset": {
+						"referenceName": "gold_layer_data",
+						"type": "DatasetReference"
+					},
+					"name": "sink2"
+				}
+			],
+			"transformations": [
+				{
+					"name": "lookup1"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "split1"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "select2"
+				},
+				{
+					"name": "derivedColumn2"
+				},
+				{
+					"name": "select3"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          country as string,",
+				"          indicator as string,",
+				"          date as string,",
+				"          year_week as string,",
+				"          value as integer,",
+				"          source as string,",
+				"          url as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> HospitalCaseData",
+				"source(output(",
+				"          country as string,",
+				"          country_code as string,",
+				"          continent as string,",
+				"          population as string,",
+				"          indicator as string,",
+				"          daily_count as string,",
+				"          date as string,",
+				"          rate_14_day as string,",
+				"          source as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> DeathCaseData",
+				"HospitalCaseData, DeathCaseData lookup(HospitalCaseData@country == DeathCaseData@country,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> lookup1",
+				"lookup1 select(mapColumn(",
+				"          country = HospitalCaseData@country,",
+				"          indicator = HospitalCaseData@indicator,",
+				"          reported_date = HospitalCaseData@date,",
+				"          year_week,",
+				"          value,",
+				"          source = HospitalCaseData@source,",
+				"          country_code,",
+				"          population",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 split(like(lower(indicator), '%daily%'),",
+				"     like(lower(indicator), '%weekly%'),",
+				"     disjoint: false) ~> split1@(daily, weekly)",
+				"split1@daily derive(hospital_occupancy_count = iif(indicator=='Daily hospital occupancy', value, 0),",
+				"          country_code = coalesce(country_code,'N/A'),",
+				"          icu_occupancy_count = iif(indicator=='Daily ICU occupancy', value, 0),",
+				"          country_code_2_digit = substring(country_code,0,2)) ~> derivedColumn1",
+				"derivedColumn1 select(mapColumn(",
+				"          country,",
+				"          reported_date,",
+				"          source,",
+				"          population,",
+				"          hospital_occupancy_count,",
+				"          icu_occupancy_count,",
+				"          country_code_3_digit = country_code,",
+				"          country_code_2_digit",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"split1@weekly derive(country_code_2_digit = \r",
+				"substring(country_code,0,2),",
+				"          new_hospital_occupancy_count = iif(like(lower(indicator),'%hospital occupancy%'), value, 0),",
+				"          new_icu_occupancy_count = iif(like(lower(indicator),'%icu occupancy%'), value, 0),",
+				"          reported_date = coalesce(reported_date,'DD-MM-YYYY'),",
+				"          source = coalesce(source,'N/A'),",
+				"          population = coalesce(population,'N/A'),",
+				"          year = left(year_week,4),",
+				"          week = right(year_week,2)) ~> derivedColumn2",
+				"derivedColumn2 select(mapColumn(",
+				"          country,",
+				"          reported_year_week = year_week,",
+				"          source,",
+				"          population,",
+				"          country_code_2_digit,",
+				"          new_hospital_occupancy_count,",
+				"          new_icu_occupancy_count",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select3",
+				"select2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1",
+				"select3 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink2"
+			]
+		}
+	}
+}

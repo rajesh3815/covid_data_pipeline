@@ -1,5 +1,5 @@
 {
-	"name": "raw_layer_data_death",
+	"name": "raw_layer_Hospital_data",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDataLakeStorage1",
@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "cases_deaths_sample.csv",
+				"fileName": "hospital_admissions_sample.csv",
 				"fileSystem": "raw"
 			},
 			"columnDelimiter": ",",
@@ -24,23 +24,7 @@
 				"type": "String"
 			},
 			{
-				"name": "country_code",
-				"type": "String"
-			},
-			{
-				"name": "continent",
-				"type": "String"
-			},
-			{
-				"name": "population",
-				"type": "String"
-			},
-			{
 				"name": "indicator",
-				"type": "String"
-			},
-			{
-				"name": "daily_count",
 				"type": "String"
 			},
 			{
@@ -48,14 +32,21 @@
 				"type": "String"
 			},
 			{
-				"name": "rate_14_day",
+				"name": "year_week",
+				"type": "String"
+			},
+			{
+				"name": "value",
 				"type": "String"
 			},
 			{
 				"name": "source",
 				"type": "String"
+			},
+			{
+				"name": "url",
+				"type": "String"
 			}
 		]
-	},
-	"type": "Microsoft.DataFactory/factories/datasets"
+	}
 }

@@ -6,7 +6,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "raw_layer_data",
+						"referenceName": "raw_layer_data_death",
 						"type": "DatasetReference"
 					},
 					"name": "source1"
